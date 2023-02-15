@@ -1,0 +1,147 @@
+# Guatemalan holiday definitions for the Ruby Holiday gem.
+#
+# Created: 2021-05-16.
+#
+# Sources:
+# - http://en.wikipedia.org/wiki/Public_holidays_in_Argentina
+# - https://www.prensalibre.com/guatemala/comunitario/feriados-y-asuetos-2023-en-guatemala-como-seran-los-descansos/
+# - https://republica.gt/vive-guatemala/feriados-2023-en-guatemala-fines-de-semana-largos-y-asuetos-de-este-ano-en-el-pais-202313013230
+---
+methods:
+  to_nearest_monday:
+    arguments: date
+    ruby: |
+        case date.wday
+        when 5
+          date += 3
+        when 4
+          date += 4
+        when 3
+          date -= 2
+        when 2
+          date -= 1
+        end
+
+        date
+
+months:
+  0:
+  - name: Jueves Santo
+    regions: [gt]
+    function: easter(year)
+    function_modifier: -3
+  - name: Viernes Santo
+    regions: [gt]
+    function: easter(year)
+    function_modifier: -2
+  - name: Sábado Santo
+    regions: [gt]
+    function: easter(year)
+    function_modifier: -1
+  1:
+  - name: Año Nuevo
+    regions: [gt]
+    mday: 1
+  3:
+  - name: Día Nacional de la Memoria por la Verdad y la Justicia
+    regions: [gt]
+    mday: 24
+  5:
+  - name: Día del Trabajo
+    regions: [gt]
+    mday: 1
+  6:
+  - name: Día del Ejército
+    regions: [gt]
+    mday: 30
+    observed: to_nearest_monday(date)
+  8:
+  - name: Día de la Asunción
+    regions: [gt]
+    mday: 15
+  9:
+  - name: Día de la Independencia
+    regions: [gt]
+    mday: 15
+  10:
+  - name: Día de la Revolución
+    regions: [gt]
+    mday: 20
+  11:
+  - name: Día de Todos los Santos
+    regions: [gt]
+    mday: 1
+  12:
+  - name: Noche Buena
+    regions: [gt]
+    mday: 24
+  - name: Navidad
+    regions: [gt]
+    mday: 25
+
+tests:
+  - given:
+      date: '2023-01-01'
+      regions: ['gt']
+    expect:
+      name: 'Año Nuevo'
+  - given:
+      date: '2023-03-24'
+      regions: ['gt']
+    expect:
+      name: 'Día Nacional de la Memoria por la Verdad y la Justicia'
+  - given:
+      date: '2023-04-06'
+      regions: ['gt']
+    expect:
+      name: 'Jueves Santo'
+  - given:
+      date: '2023-04-07'
+      regions: ['gt']
+    expect:
+      name: 'Viernes Santo'
+  - given:
+      date: '2023-04-08'
+      regions: ['gt']
+    expect:
+      name: 'Sábado Santo'
+  - given:
+      date: '2023-05-01'
+      regions: ['gt']
+    expect:
+      name: 'Día del Trabajo'
+  - given:
+      date: '2023-06-30'
+      regions: ['gt']
+    expect:
+      name: 'Día del Ejército'
+  - given:
+      date: '2023-08-15'
+      regions: ['gt']
+    expect:
+      name: 'Día de la Asunción'
+  - given:
+      date: '2023-09-15'
+      regions: ['gt']
+    expect:
+      name: 'Día de la Independencia'
+  - given:
+      date: '2023-10-20'
+      regions: ['gt']
+    expect:
+      name: 'Día de la Revolución'
+  - given:
+      date: '2023-11-01'
+      regions: ['gt']
+    expect:
+      name: 'Día de Todos los Santos'
+  - given:
+      date: '2023-12-24'
+      regions: ['gt']
+    expect:
+      name: 'Noche Buena'
+  - given:
+      date: '2023-12-25'
+      regions: ['gt']
+    expect:
+      name: 'Navidad'
